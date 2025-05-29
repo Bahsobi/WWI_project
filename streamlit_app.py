@@ -175,4 +175,42 @@ st.subheader("📉 Odds Ratios for Infertility by WWI Quartiles")
 df_wwi = df[['WWI', 'infertility']].copy()
 df_wwi['WWI_quartile'] = pd.qcut(df_wwi['WWI'], 4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
 
-X
+X_q = pd.get_dummies(df_wwi['WWI_quartile'], drop_first=True)
+X_q = sm.add_constant(X_q).astype(float)
+y_q = df_wwi['infertility'].astype(float)
+
+model_q = sm.Logit(y_q, X_q).fit(disp=False)
+ors = np.exp(model_q.params)
+ci = model_q.conf_int()
+ci.columns = ['2.5%', '97.5%']
+ci = np.exp(ci)
+
+or_df = pd.DataFrame({
+    'Quartile': ors.index,
+    'Odds Ratio': ors.values,
+    'CI Lower': ci['2.5%'],
+    'CI Upper': ci['97.5%'],
+    'p-value': model_q.pvalues
+}).query("Quartile != 'const'")
+
+st.dataframe(or_df.set_index('Quartile').style.format("{:.2f}"))
+
+fig3, ax3 = plt.subplots()
+sns.pointplot(data=or_df, x='Quartile', y='Odds Ratio', join=False, capsize=0.2, errwidth=1.5)
+ax3.axhline(1, linestyle='--', color='gray')
+ax3.set_title("Odds Ratios for Infertility by WWI Quartiles")
+st.pyplot(fig3)
+
+# ---------- Summary ----------
+with st.expander("📋 Data Summary"):
+    st.write(df.describe())
+
+st.subheader("🎯 Infertility Distribution")
+fig2, ax2 = plt.subplots()
+df['infertility'].value_counts().plot.pie(
+    autopct='%1.1f%%', labels=['Not Infertile', 'Infertile'], ax=ax2, colors=["#81c784", "#e57373"])
+ax2.set_ylabel("")
+st.pyplot(fig2)
+
+with st.expander("🔍 Sample Data (First 10 Rows)"):
+    st.dataframe(df.head(10))
