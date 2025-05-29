@@ -118,10 +118,10 @@ race_options = [
     "Non-Hispanic Black", "Non-Hispanic Asian", "Other Race - Including Multi-Racial"
 ]
 
-WWI = st.sidebar.number_input("WWI (0.0 - 5000.0)", min_value=0.0, max_value=5000.0, value=10.0)
-age = st.sidebar.number_input("Age (15 - 60)", min_value=15, max_value=60, value=30)
-bmi = st.sidebar.number_input("BMI (10.0 - 50.0)", min_value=10.0, max_value=50.0, value=25.0)
-HOMA_IR = st.sidebar.number_input("HOMA-IR (0.0 - 50.0)", min_value=0.0, max_value=50.0, value=2.0)
+WWI = st.sidebar.number_input("WWI (8.04 - 14.14)", min_value=8.04, max_value=14.14, value=10.0)
+age = st.sidebar.number_input("Age (18 - 59)", min_value=18, max_value=59, value=30)
+bmi = st.sidebar.number_input("BMI (14.6 - 82.0)", min_value=14.6, max_value=82.0, value=25.0)
+HOMA_IR = st.sidebar.number_input("HOMA-IR (0.22 - 34.1)", min_value=0.22, max_value=34.1, value=2.0)
 race = st.sidebar.selectbox("Race", race_options)
 hyperlipidemia = st.sidebar.selectbox("Hyperlipidemia", ['Yes', 'No'])
 diabetes = st.sidebar.selectbox("Diabetes", ['Yes', 'No'])
