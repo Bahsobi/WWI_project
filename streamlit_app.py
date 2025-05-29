@@ -37,7 +37,7 @@ st.markdown(
 )
 
 st.title('🤖🤰 Machine Learning Models APP for Advanced Predicting Infertility Risk in Women')
-st.info('Predict the **Infertility** based on health data using NNet and Logistic Regression..')
+st.info('Predict the **Infertility** based on health data using NNet and Logistic Regression.')
 
 # ---------- Load Data ----------
 @st.cache_data
